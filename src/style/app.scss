@@ -78,8 +78,18 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 // Service Boxes
 .services {
   .column {
+    display: flex;
+    flex-direction: column;
+
     @include desktop {
       padding: 1rem;
+    }
+
+    .box {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+      align-self: stretch;
     }
   }
 }
