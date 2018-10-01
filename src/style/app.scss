@@ -1,0 +1,219 @@
+// Import Bulma
+@charset "utf-8";
+@import "~bulma/sass/utilities/initial-variables";
+
+// All based off red
+// https://color.adobe.com/clean-modern-color-theme-11029103/?showPublished=true
+// https://color.adobe.com/EDGE-Yoga-Color-Palette-V1-color-theme-7981311/?showPublished=true
+$al-red:   #FF3D2E;
+$al-black: #272F32;
+
+$al-black-ter: lighten($al-black, 10%);
+
+
+// Change orange to our red (warning buttons, etc)
+$orange:  $al-red;
+$primary: $al-black;
+
+// Navbar
+$navbar-background-color: $al-black;
+$navbar-item-color: $white-ter;
+$navbar-item-hover-color: $grey-lighter;
+$navbar-item-hover-background-color: $al-black-ter;
+// This seems to be only .navbar-link.is-active (AKA dropdown open)
+$navbar-item-active-color: $navbar-item-color;
+$navbar-item-active-background-color: transparent;
+$navbar-burger-color: $al-red;
+// The above doesn't actually work
+.navbar-burger {
+  color: $navbar-burger-color;
+}
+$navbar-tab-hover-background-color: transparent;
+$navbar-tab-hover-border-bottom-color: $al-red;
+$navbar-tab-active-color: $al-red;
+$navbar-tab-active-border-bottom-color: $al-red;
+$navbar-dropdown-arrow: $al-red;
+// Reset dropdown to normal
+.navbar-dropdown .navbar-item {
+  color: $grey-dark;
+}
+
+@import "~bulma/bulma";
+@import "./quick-modifiers.scss";
+@import "~bulma/sass/utilities/mixins";
+// Bulma Done
+
+// Font awesome
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+
+// Glitch from: https://codepen.io/tvnext/pen/rVpezG
+.hero.glitch {
+  // BG part adds lines
+  $gl-black: $black;
+  $gl-line: adjust-color($gl-black, 0, 30, 0);  // Was literal #020
+  background: repeating-linear-gradient(0deg, $gl-black, $gl-black 2px, $gl-line 2px, $gl-line 4px);
+  background-attachment: fixed;
+  text-align:center;
+  position: relative;
+
+  h1 {
+    max-width: $tablet;
+    margin: 0 auto;
+    background: url(/img/glitch.gif);
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-weight: bold;
+
+    @include desktop {
+      font-size: 4rem;
+    }
+  }
+}
+
+// Service Boxes
+.services {
+  .column {
+    @include desktop {
+      padding: 1rem;
+    }
+  }
+}
+// Strip box side padding until .kontent
+.box.no-sides {
+  padding-left: 0;
+  padding-right: 0;
+  .kontent {
+    padding-left: $box-padding;
+    padding-right: $box-padding;
+  }
+}
+
+$sb-head-size: 4rem;
+// Blockchain header
+@keyframes bchain {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+.blockchain {
+  display: block;
+  width: 100%;
+  height: $sb-head-size;
+  overflow: hidden;
+  color: $purple;
+  position: relative;
+  .block {
+    opacity: 0.7;
+    font-family: 'Font Awesome 5 Free';
+    position: absolute;
+    display: block;
+    width: 100%;
+    animation: bchain 3s linear infinite;
+  }
+}
+
+// Scanner
+@keyframes scan {
+  0% {
+    height: 0%;
+  }
+  100% {
+    height: 100%;
+  }
+}
+@keyframes scanlr {
+  0% {
+    left: 0%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+.scanner {
+  display: block;
+  width: 100%;
+  height: $sb-head-size;
+  overflow: hidden;
+  position: relative;
+  background-size: 10px 10px;
+  background-image: radial-gradient(circle, $grey-lighter 1px, rgba(0, 0, 0, 0) 1px);
+
+  &:before, &:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    display: block;
+  }
+
+  &:before{
+    border-right: 1px solid $green;
+    height: 100%;
+    width: 1px;
+    left: 20%;
+    animation: scanlr 1s infinite alternate linear;
+    box-shadow: 0 0 40px 2px $green;
+  }
+
+  &:after {
+    border-bottom: 1px solid $green;
+    width: 100%;
+    height: 60%;
+    animation: scan 5s infinite  linear;
+  }
+}
+
+// Spinning Circles
+@keyframes spin {
+  0% {
+    transform: rotate3d(0, 1, 1, 360deg);
+  }
+  50% {
+    transform: rotate3d(0, 1, 1, 180deg);
+  }
+  100% {
+    transform: rotate3d(0, 1, 1, 0deg);
+  }
+}
+.spinners {
+  display: block;
+  width: 100%;
+  height: $sb-head-size;
+  overflow: hidden;
+  position: relative;
+
+  &:before, &:after {
+    content: " ";
+    width: $sb-head-size;
+    height: $sb-head-size;
+    border: 3px solid $al-red;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: $sb-head-size/-2 0 0 $sb-head-size/-2;
+    display: block;
+    transform-origin: 50% 50% 0;
+  }
+
+  &:before {
+    transform: rotate3d(0, 1, 1, 45deg);
+    animation: spin 2s infinite linear;
+  }
+
+  &:after {
+    border-color: $cyan;
+    transform: rotate3d(0, 1, 1, 270deg);
+    animation: spin 4s infinite linear alternate;
+  }
+}
+
+

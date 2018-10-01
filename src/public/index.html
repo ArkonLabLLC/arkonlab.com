@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ff3d2e">
+  <meta name="msapplication-TileColor" content="#b91d47">
+  <meta name="theme-color" content="#ff3d2e">
+  <title>Arkon Lab</title>
+</head>
+
+<body class="has-navbar-fixed-top">
+
+  <nav class="navbar is-fixed-top has-shadow is-spaced" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          <img src="/img/logo.svg" alt="Arkon Lab">
+        </a>
+
+        <!-- Ensure this is always last child if navbar-brand -->
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div> <!-- /brand -->
+      <div class="navbar-menu">
+        <div class="navbar-start">
+
+        </div> <!-- /start -->
+
+        <div class="navbar-end">
+          <a href="#contactUs" class="navbar-item smooth">
+            Contact Us
+          </a>
+        </div> <!-- /end -->
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero is-black is-medium green-lines glitch">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          THE STATE OF SOFTWARE IS IN FLUX
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="section has-background-light">
+    <div class="container">
+      <h2 class="title">
+        You need a partner that knows the field
+      </h2>
+      <p class="subtitle">
+        A partner who puts security first
+      </p>
+    </div>
+  </section>
+
+  <section class="section services">
+    <div class="container">
+      <div class="columns">
+        <div class="column">
+          <div class="box is-radiusless has-text-centered">
+            <div class="spinners is-unselectable"></div>
+            <h3 class="is-size-4">IoT</h3>
+            <p>
+              Everything is more connected than ever. We can help build systems
+              and custom devices that ensure your <i>Internet of Things</i>
+              communicate with each other and extract valuable data out of
+              your systems.
+            </p>
+
+          </div>
+        </div>
+        <div class="column">
+          <div class="box is-radiusless no-sides">
+            <div class="blockchain is-unselectable"></div>
+            <div class="kontent has-text-centered">
+              <h3 class="is-size-4">Blockchain</h3>
+              <p>
+                If you look past the buzz around crypto currencies, the
+                underlying technology is what is most exciting. Using an
+                distributed immutable ledger can help improve business
+                processes or create contracts of the future.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="box is-radiusless has-text-centered">
+            <div class="scanner is-unselectable"></div>
+            <h3 class="is-size-4">Vulnerability Assessment</h3>
+            <p>
+              When is the last time your business, building, or software was
+              audited? Do you know if your processes and policies actually
+              improve your security? From code analysis, to remote and on-site
+              penetration testing, we can help.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section has-background-light" id="contactUs">
+    <div class="container">
+      <h4 class="is-size-4 has-text-centered m-b-lg">Drop us a line</h4>
+      <div class="notification is-success" id="msgSent" style="display: none;">
+        Message sent! Thank you!
+      </div>
+      <form id="contact">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">From</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded has-icons-left">
+                <input class="input" type="text" name="name" placeholder="Name">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control is-expanded has-icons-left">
+                <input class="input" type="email" name="email" placeholder="Email">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Message</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <textarea class="textarea" name="message" placeholder="Explain how we can help you"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <!-- Left empty for spacing -->
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <button class="button is-success" type="submit" id="contactSubmit">
+                  Send message
+                </button>
+                <noscript>This form requires javascript to submit</noscript>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</body>
+
+</html>

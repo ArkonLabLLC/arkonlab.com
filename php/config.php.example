@@ -1,0 +1,6 @@
+<?php
+$server = 'server.host.com';
+$port = 456;
+$username = 'foobar@email.com';
+$password = 'hunter2';
+$sendTo = ['joe@email.com', 'mike@email.com'];
