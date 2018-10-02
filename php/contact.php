@@ -19,26 +19,33 @@ require 'phpmailer/src/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 
 $mail = new PHPMailer;
-$mail->isSMTP();
-// 0 No output (for production use)
-// 1 Commands
-// 2 Data and commands
-// 3 As 2 plus connection status
-// 4 Low-level data output
-$mail->SMTPDebug = 0;
 
-// Login
-$mail->Host = $addr;
-$mail->Port = $port;
-$mail->SMTPAuth = true;
-$mail->SMTPSecure = 'tls';
-$mail->Username = $username;
-$mail->Password = $password;
+if ($useSMTP) {
+  $mail->isSMTP();
+  // 0 No output (for production use)
+  // 1 Commands
+  // 2 Data and commands
+  // 3 As 2 plus connection status
+  // 4 Low-level data output
+  $mail->SMTPDebug = 0;
+
+  // Login
+  $mail->Host = $server;
+  $mail->Port = $port;
+  $mail->SMTPAuth = true;
+  $mail->SMTPSecure = 'tls';
+  $mail->Username = $username;
+  $mail->Password = $password;
+} else {
+  $mail->isMail();
+}
 
 //Set who the message is to be sent from
 $mail->setFrom($username, 'Arkon Lab Contact Form');
+$mail->clearReplyTos();
 foreach ($sendTo as $addr) {
   $mail->addAddress($addr);
+  $mail->addReplyTo($addr);
 }
 
 date_default_timezone_set('America/New_York');
