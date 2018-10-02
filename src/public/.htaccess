@@ -1,0 +1,25 @@
+# Some things from https://gist.github.com/joostvanveen/bcce49db29e33268771c
+Options -MultiViews
+#Options +FollowSymLinks
+ServerSignature Off
+Options All -Indexes
+
+# Hide PHP errors
+# Comment these out if you're trying to debug ;)
+php_flag display_errors off
+php_flag display_startup_errors off
+php_flag html_errors off
+php_value docref_root 0
+php_value docref_ext 0
+
+# HTTPS Rewrite
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteCond %{HTTP_HOST} ^arkonlab\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.arkonlab\.com$
+RewriteRule ^/?(.*)$ https://arkonlab.com/$1 [R=301,L]
+
+<Files .htaccess>
+Order Allow,Deny
+Deny from all
+</Files>

@@ -226,4 +226,25 @@ $sb-head-size: 4rem;
   }
 }
 
+// Text area counter
+.text-area-counter {
+  @include unselectable;
+  @include until($desktop) {
+    display: none;
+  }
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+  font-size: $size-small;
+  background: $input-border-color;
+  color: $input-color;
+  padding: 0.25rem;
+  border-radius: $input-radius;
+  opacity: 0.5;
 
+  &.warning {
+    background: $yellow;
+    color: $black;
+  }
+}

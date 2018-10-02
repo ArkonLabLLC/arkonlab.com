@@ -1,6 +1,7 @@
 import '../style/app.scss';
 // Hacky way of exposing jQuery to the window
 window.$ = $;
+import 'jquery-validation/dist/jquery.validate.js';
 
 // Hamburger helper
 $(function () {
@@ -38,7 +39,7 @@ $(function () {
   }());
 });
 
-// Blockchain
+// Blockchain animation
 $(function () {
   function rnd(m, n) {
     m = parseInt(m);
@@ -67,41 +68,57 @@ $(function () {
   var $btn = $('#contactSubmit');
   var $msg = $('#msgSent');
 
-  $('form#contact').submit(function (event) {
-    event.preventDefault();
-    if (formLoading) {
-      // Don't re-submit
-      return;
+  // jquery validation plugin
+  // https://jqueryvalidation.org/validate/
+  $('form#contact').validate({
+    errorClass: 'is-danger',
+    errorElement: 'p',
+    ignoreTitle: true,
+    errorPlacement: function (error, element) {
+      // We do this simply to add the help class as we can't do it
+      // with errorClass as it'll add it to the inputs too.
+      error.addClass('help').appendTo(element.parent());
+    },
+    invalidHandler: function (event, validator) {
+      event.preventDefault();
+      $msg.hide();
+    },
+    submitHandler: function (form, event) {
+      event.preventDefault();
+      if (formLoading) {
+        // Don't re-submit
+        return;
+      }
+      // Reset everything
+      $msg.hide();
+      $btn
+        .addClass('is-loading')
+        .prop('disabled', true);
+      formLoading = true;
+
+      // Massage the data
+      var data = $(form).serializeArray().reduce(function (collect, d) {
+        collect[d.name] = d.value;
+        return collect;
+      }, {});
+
+      $.ajax({
+        url: '/contact.php',
+        type: 'POST',
+        data: data,
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: 'text'
+      })
+        .always(function () {
+          // It doesn't matter if the form submitted successfully or not.
+          // What's the user going to do?
+          formLoading = false;
+          $btn
+            .removeClass('is-loading')
+            .prop('disabled', false);
+          $msg.show();
+        });
     }
-    // Reset everything
-    $msg.hide();
-    $btn
-      .addClass('is-loading')
-      .prop('disabled', true);
-    formLoading = true;
-
-    // Massage the data
-    var data = $(this).serializeArray().reduce(function (collect, d) {
-      collect[d.name] = d.value;
-      return collect;
-    }, {});
-
-    $.ajax({
-      url: '/contact.php',
-      type: 'POST',
-      data: data,
-      contentType: 'application/x-www-form-urlencoded',
-      dataType: 'text'
-    })
-      .always(function () {
-        // It doesn't matter if the form submitted successfully or not.
-        // What's the user going to do?
-        formLoading = false;
-        $btn
-          .removeClass('is-loading')
-          .prop('disabled', false);
-        $msg.show();
-      });
   });
 });
 
@@ -134,3 +151,63 @@ $(function () {
       }
     });
 });
+
+// Text area remaining characters counter.
+// Add the class .show-count to any textarea.
+// If the text area has a maxlength count will be out of that.
+// Ensure the parent is a .control or another container that has a position
+// set to prevent our counter element from escaping.
+$(function () {
+  var WARNING_CLASS = 'warning';
+  var WARNING_THRESHOLD = 100;
+
+  /* Feature detection */
+  var passiveIfSupported = false;
+  try {
+    var opt = Object.defineProperty({}, 'passive', {
+      get: function () { passiveIfSupported = { passive: true }; return true; }
+    });
+    window.addEventListener('test', opt, opt);
+    window.removeEventListener('test', opt, opt);
+  } catch (err) { }
+
+  $('textarea.show-count').each(function () {
+    var $textArea = $(this);
+    var MAX_CHARS = parseInt($textArea.attr('maxlength'), 10);
+    var SHOW_MAX = !isNaN(MAX_CHARS) && !!MAX_CHARS;
+    var WARNING_CHARS = SHOW_MAX ? MAX_CHARS - WARNING_THRESHOLD : 0;
+
+    var $control = $textArea.parent(); // .control parent
+    var $value = $('<span/>').text('0');
+    var $counter = $('<div />')
+      .addClass('text-area-counter')
+      .append($value)
+      .appendTo($control);
+    if (SHOW_MAX) {
+      $counter.append('<span>/' + MAX_CHARS + '</span>');
+    }
+
+    // We're going to bind to keydown manually as we want to use passive
+    // binding if the browser supports it. This is also WAAAAAAY faster than
+    // jQuery's event binding (lots of overhead in there).
+    var wasOverMax = false;
+    window.addEventListener('input', function (event) {
+      var len = $textArea.val().length;
+      $value.text(len);
+
+      if (!SHOW_MAX) {
+        return;
+      }
+
+      // We use wasOverMax as a flag to prevent unnecessary class flipping
+      var isOver = parseInt(len, 10) > WARNING_CHARS;
+      if (isOver && !wasOverMax) {
+        wasOverMax = true;
+        $counter.addClass(WARNING_CLASS);
+      } else if (!isOver && wasOverMax) {
+        wasOverMax = false;
+        $counter.removeClass(WARNING_CLASS)
+      }
+    }, passiveIfSupported);
+  });
+})

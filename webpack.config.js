@@ -201,6 +201,7 @@ module.exports = function makeWebpackConfig() {
     //     timeout: 3,
     //   }
     // }),
+    // Give everyone jQuery
     new webpack.ProvidePlugin({
       'window.jQuery': 'jquery',
       jQuery: 'jquery',

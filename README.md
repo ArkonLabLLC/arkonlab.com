@@ -10,6 +10,8 @@ Create a build which will output to the `dist` directory.
 npm run build
 ```
 
+Copy all files from `dist/` and `php/` to the web root.
+
 ## First time setup
 ```
 npm install

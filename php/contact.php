@@ -2,6 +2,7 @@
 // Turn off all error reporting
 error_reporting(0);
 set_time_limit(15); // Die pretty quickly
+$MAX_BODY_CHAR = 4000; // About 500 words. This needs to match the HTML.
 
 // header('Access-Control-Allow-Origin: *');
 // header('Access-Control-Allow-Methods: POST');
@@ -46,7 +47,7 @@ $mail->Subject = 'Arkon Lab Contact Form on ' . date('c');
 $mail->Body = '' .
   'Name: ' . htmlspecialchars($_POST['name']) . "\n" .
   'Email: ' . htmlspecialchars($_POST['email']) . "\n" .
-  "\n" . htmlspecialchars($_POST['message']);
+  "\n" . htmlspecialchars(substr($_POST['message'], 0, $MAX_BODY_CHAR));
 
 // Send it!
 die($mail->send() ? 'ok' : 'fail');
